@@ -1,0 +1,9 @@
+.env
+.env.*
+!.env.example
+money-mate.sqlite
+money-mate.sqlite-shm
+money-mate.sqlite-wal
+carenest-demo.sqlite
+carenest-demo.sqlite-shm
+carenest-demo.sqlite-wal

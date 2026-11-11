@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f8fc" />
+    <meta name="description" content="CareNest clinic appointment and patient-records student project demo." />
+    <title>CareNest Clinic — Appointments &amp; patient records</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#dashboard" aria-label="CareNest dashboard">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 36 36" fill="none"><rect width="36" height="36" rx="12" fill="currentColor"/><path d="M18 9v18M9 18h18" stroke="white" stroke-width="3.2" stroke-linecap="round"/></svg></span>
+          <span>care<span class="brand-light">nest</span><small>CLINIC DESK</small></span>
+        </a>
+        <p class="nav-caption">WORKSPACE</p>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a class="nav-link active" href="#dashboard" data-view="dashboard" aria-current="page"><span class="nav-icon">⌂</span> Dashboard</a>
+          <a class="nav-link" href="#appointments" data-view="appointments"><span class="nav-icon">▦</span> Appointments</a>
+          <a class="nav-link" href="#patients" data-view="patients"><span class="nav-icon">♙</span> Patient records</a>
+          <p class="nav-caption nav-caption-secondary">CLINIC</p>
+          <a class="nav-link" href="#doctors" data-view="doctors"><span class="nav-icon">✚</span> Our doctors</a>
+          <a class="nav-link" href="#departments" data-view="departments"><span class="nav-icon">✿</span> Departments</a>
+          <a class="nav-link" href="#insights" data-view="insights"><span class="nav-icon">◒</span> Clinic pulse</a>
+          <a class="nav-link" href="#about" data-view="about"><span class="nav-icon">ⓘ</span> About this project</a>
+        </nav>
+        <div class="sidebar-spacer"></div>
+        <div class="sidebar-clinic">
+          <span class="clinic-avatar" aria-hidden="true">✚</span>
+          <span><strong>CareNest Clinic</strong><small>Front desk workspace</small></span>
+          <span class="online-dot" title="Local demo"></span>
+        </div>
+        <div class="sidebar-footer"><span class="demo-lock">▣</span><span>Student project demo<small>Fictional data only</small></span></div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <button class="mobile-menu" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+          <div class="breadcrumb">CareNest <span>/</span> <strong id="breadcrumbCurrent">Dashboard</strong></div>
+          <div class="topbar-actions">
+            <span class="date-label"><span class="calendar-icon">▦</span><span id="todayLabel">Today</span></span>
+            <span class="server-status" id="serverStatus"><i></i><span id="serverStatusLabel">Connecting</span></span>
+            <span class="avatar" aria-label="Clinic administrator">CA</span>
+          </div>
+        </header>
+
+        <div class="party-decor" aria-hidden="true">
+          <span class="party-bubble bubble-one"></span>
+          <span class="party-bubble bubble-two"></span>
+          <span class="party-bubble bubble-three"></span>
+          <span class="party-balloon balloon-lilac"></span>
+          <span class="party-balloon balloon-peach"></span>
+          <span class="party-balloon balloon-mint"></span>
+          <span class="party-sparkle">✦</span>
+        </div>
+
+        <div class="privacy-banner" role="note">
+          <span class="privacy-icon" aria-hidden="true">ⓘ</span>
+          <p><strong>Student demo — fictional records only.</strong> This prototype has no sign-in or production-grade health-data security. Do not enter real patient information.</p>
+        </div>
+
+        <section class="view active" id="dashboardView" aria-labelledby="pageTitle">
+          <div class="page-heading">
+            <div>
+              <span class="eyebrow">CLINIC WORKSPACE <span class="eyebrow-dot"></span> STUDENT PROJECT</span>
+              <h1 id="pageTitle">CareNest Clinic Dashboard</h1>
+              <p class="heading-subtitle">Manage patient records and appointments from one place.</p>
+            </div>
+            <button class="primary-button" id="bookAppointmentTop" type="button"><span>＋</span> Book appointment</button>
+          </div>
+
+          <section class="summary-grid" aria-label="Clinic summary">
+            <article class="summary-card">
+              <div class="card-top"><span class="card-label">Appointments today</span><span class="summary-icon icon-lilac">▦</span></div>
+              <div class="summary-amount" id="todayCount">—</div>
+              <div class="summary-foot">Scheduled for today</div>
+              <span class="card-decoration dec-lilac" aria-hidden="true"></span>
+            </article>
+            <article class="summary-card">
+              <div class="card-top"><span class="card-label">Patient records</span><span class="summary-icon icon-mint">♙</span></div>
+              <div class="summary-amount" id="patientCount">—</div>
+              <div class="summary-foot">Fictional demo profiles</div>
+              <span class="card-decoration dec-mint" aria-hidden="true"></span>
+            </article>
+            <article class="summary-card">
+              <div class="card-top"><span class="card-label">Upcoming visits</span><span class="summary-icon icon-peach">◷</span></div>
+              <div class="summary-amount" id="upcomingCount">—</div>
+              <div class="summary-foot">Next 7 days</div>
+              <span class="card-decoration dec-peach" aria-hidden="true"></span>
+            </article>
+            <article class="summary-card">
+              <div class="card-top"><span class="card-label">Completed today</span><span class="summary-icon icon-blue">✓</span></div>
+              <div class="summary-amount" id="completedCount">—</div>
+              <div class="summary-foot">Visits marked complete</div>
+              <span class="card-decoration dec-blue" aria-hidden="true"></span>
+            </article>
+            <article class="summary-card">
+              <div class="card-top"><span class="card-label">Doctors</span><span class="summary-icon icon-rose">✚</span></div>
+              <div class="summary-amount" id="doctorCount">—</div>
+              <div class="summary-foot">Available demo profiles</div>
+              <span class="card-decoration dec-rose" aria-hidden="true"></span>
+            </article>
+          </section>
+
+          <section class="workflow-panel" aria-labelledby="workflowTitle">
+            <div class="workflow-heading">
+              <span class="workflow-heading-icon" aria-hidden="true">↗</span>
+              <div><h2 id="workflowTitle">How to use this demo</h2><p>Follow these three steps to see how the clinic workflow fits together.</p></div>
+            </div>
+            <div class="workflow-steps">
+              <button class="workflow-step" type="button" id="workflowPatient">
+                <span class="workflow-number">01</span><span class="workflow-step-copy"><strong>Create a patient record</strong><small>Add a fictional profile to the patient directory.</small></span><span class="workflow-chevron">→</span>
+              </button>
+              <span class="workflow-connector" aria-hidden="true">···</span>
+              <button class="workflow-step" type="button" id="workflowBook">
+                <span class="workflow-number">02</span><span class="workflow-step-copy"><strong>Book an appointment</strong><small>Choose the patient, doctor, department and time.</small></span><span class="workflow-chevron">→</span>
+              </button>
+              <span class="workflow-connector" aria-hidden="true">···</span>
+              <button class="workflow-step" type="button" id="workflowManage">
+                <span class="workflow-number">03</span><span class="workflow-step-copy"><strong>Update the visit status</strong><small>Find the appointment and mark it complete or cancelled.</small></span><span class="workflow-chevron">→</span>
+              </button>
+            </div>
+          </section>
+
+          <section class="dashboard-grid">
+            <article class="panel today-panel">
+              <div class="panel-heading">
+                <div><span class="section-kicker">YOUR CLINIC, AT A GLANCE</span><h2>Today’s appointments</h2><p id="todaySubtitle">Loading today’s schedule…</p></div>
+                <button class="quiet-button" type="button" data-navigate="appointments">Full schedule <span>→</span></button>
+              </div>
+              <div class="schedule-list" id="todayAppointments"></div>
+            </article>
+            <article class="panel appointment-panel">
+              <div class="panel-heading">
+                <div><span class="section-kicker">NEXT ON THE CALENDAR</span><h2>Upcoming visits</h2><p>Your next scheduled appointments.</p></div>
+                <span class="heading-icon" aria-hidden="true">✦</span>
+              </div>
+              <div class="upcoming-list" id="upcomingAppointments"></div>
+              <button class="panel-link" type="button" data-navigate="appointments">View all appointments <span>→</span></button>
+            </article>
+          </section>
+
+          <section class="panel quick-panel">
+            <div class="panel-heading">
+              <div><span class="section-kicker">FRONT DESK SHORTCUTS</span><h2>What would you like to do?</h2><p>Common tasks, ready when you are.</p></div>
+            </div>
+            <div class="quick-actions">
+              <button class="quick-action" id="quickBook" type="button"><span class="quick-icon quick-lilac">＋</span><span><strong>Book an appointment</strong><small>Choose a patient, doctor and time</small></span><span class="quick-arrow">→</span></button>
+              <button class="quick-action" id="quickPatient" type="button"><span class="quick-icon quick-mint">♙</span><span><strong>Add a patient record</strong><small>Save a fictional demo profile</small></span><span class="quick-arrow">→</span></button>
+              <button class="quick-action" type="button" data-navigate="patients"><span class="quick-icon quick-peach">⌕</span><span><strong>Find a patient</strong><small>Search the patient directory</small></span><span class="quick-arrow">→</span></button>
+            </div>
+          </section>
+          <div class="project-note"><span>✦</span><p><strong>Open Innovation project</strong> — CareNest is a student-built clinic workflow demo using a responsive frontend, a local API and an SQLite database. It is not a real healthcare system.</p></div>
+        </section>
+
+        <section class="view" id="appointmentsView" aria-labelledby="appointmentsTitle" hidden>
+          <div class="page-heading page-heading-list">
+            <div><span class="eyebrow">CLINIC WORKSPACE <span class="eyebrow-dot"></span> SCHEDULING</span><h1 id="appointmentsTitle">Appointments</h1><p class="heading-subtitle">Book visits and keep the clinic schedule organized.</p></div>
+            <button class="primary-button" id="bookAppointmentList" type="button"><span>＋</span> Book appointment</button>
+          </div>
+          <div class="status-guide" aria-label="Appointment status explanations">
+            <div class="status-guide-item"><span class="status-badge status-scheduled">Scheduled</span><p>Visit is planned. You can edit, complete or cancel it.</p></div>
+            <div class="status-guide-item"><span class="status-badge status-completed">Completed</span><p>Visit took place. It stays in the patient’s history.</p></div>
+            <div class="status-guide-item"><span class="status-badge status-cancelled">Cancelled</span><p>Visit will not take place. It stays in the record.</p></div>
+          </div>
+          <section class="panel records-panel">
+            <div class="panel-heading records-heading">
+              <div><span class="section-kicker">APPOINTMENT SCHEDULE</span><h2>All appointments</h2><p>Each appointment connects a patient to a doctor, department and visit time.</p></div>
+              <div class="table-filters">
+                <label class="search-box"><span aria-hidden="true">⌕</span><span class="sr-only">Search appointments</span><input id="appointmentSearch" type="search" placeholder="Search patient or doctor" /></label>
+                <select id="appointmentStatusFilter" aria-label="Filter appointments by status"><option value="all">All statuses</option><option value="scheduled">Scheduled</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option></select>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>TIME &amp; DATE</th><th>PATIENT</th><th>DOCTOR</th><th>DEPARTMENT</th><th>STATUS</th><th>ACTIONS</th></tr></thead>
+                <tbody id="appointmentRows"></tbody>
+              </table>
+              <div class="empty-state" id="appointmentEmpty" hidden>No appointments match this search.</div>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="patientsView" aria-labelledby="patientsTitle" hidden>
+          <div class="page-heading page-heading-list">
+            <div><span class="eyebrow">CLINIC WORKSPACE <span class="eyebrow-dot"></span> PATIENT DIRECTORY</span><h1 id="patientsTitle">Patient records</h1><p class="heading-subtitle">View, search and update fictional patient profiles for this demo.</p></div>
+            <button class="primary-button" id="addPatient" type="button"><span>＋</span> Add patient</button>
+          </div>
+          <section class="panel records-panel">
+            <div class="panel-heading records-heading">
+              <div><span class="section-kicker">PATIENT DIRECTORY</span><h2>All patients</h2><p>Each record contains contact details, optional demo notes and linked appointments.</p></div>
+              <label class="search-box"><span aria-hidden="true">⌕</span><span class="sr-only">Search patient records</span><input id="patientSearch" type="search" placeholder="Search by name, phone or email" /></label>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table patient-table">
+                <thead><tr><th>PATIENT</th><th>CONTACT</th><th>DATE OF BIRTH</th><th>VISITS</th><th>RECORD</th><th>ACTIONS</th></tr></thead>
+                <tbody id="patientRows"></tbody>
+              </table>
+              <div class="empty-state" id="patientEmpty" hidden>No patient records match this search.</div>
+            </div>
+          </section>
+        </section>
+
+        <section class="view" id="doctorsView" aria-labelledby="doctorsTitle" hidden>
+          <div class="page-heading page-heading-list">
+            <div><span class="eyebrow">MEET THE TEAM <span class="eyebrow-dot"></span> FICTIONAL PROFILES</span><h1 id="doctorsTitle">Our doctors</h1><p class="heading-subtitle">Explore the clinicians available in this classroom demo and start a booking.</p></div>
+            <button class="primary-button" type="button" data-navigate="departments"><span>✿</span> Explore departments</button>
+          </div>
+          <div class="photo-note"><span aria-hidden="true">ⓘ</span> Doctor names, profiles and clinic hours are fictional demo information. Portraits are illustrative photos from Unsplash and do not represent real CareNest staff.</div>
+          <section class="doctor-spotlight" aria-labelledby="doctorSpotlightTitle">
+            <div class="spotlight-photo"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&amp;fit=crop&amp;w=500&amp;q=85" alt="" loading="lazy" /><span>FEATURED DOCTOR</span></div>
+            <div class="spotlight-copy">
+              <span class="spotlight-kicker"><span>✦</span> DOCTOR SPOTLIGHT</span>
+              <h2 id="doctorSpotlightTitle">Meet Dr. Maya Patel</h2>
+              <p class="spotlight-specialty">General Medicine <span>·</span> Fictional demo profile</p>
+              <p class="spotlight-description">A featured profile in the CareNest student demo, representing the friendly, organized clinic experience this project aims to showcase.</p>
+              <div class="spotlight-hours"><span>◷</span><span><strong>Sample clinic hours</strong><small>Monday–Friday · 9:00 AM–1:00 PM</small></span></div>
+              <button class="spotlight-book" type="button" data-doctor="Dr. Maya Patel" data-department="General Medicine">Book a demo visit <span>→</span></button>
+            </div>
+            <span class="spotlight-decoration" aria-hidden="true">✦</span>
+          </section>
+          <div class="doctor-grid" id="doctorGrid">
+            <article class="doctor-card doctor-card-lilac">
+              <div class="doctor-photo-wrap"><img class="doctor-photo" src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&amp;fit=crop&amp;w=720&amp;q=85" alt="" loading="lazy" /><span class="doctor-photo-fallback" aria-hidden="true">MP</span><span class="doctor-photo-label">GENERAL MEDICINE</span></div>
+              <div class="doctor-card-body"><span class="doctor-specialty">General Medicine</span><h2>Dr. Maya Patel</h2><p>Routine check-ups and everyday wellness visits for the whole family.</p><div class="doctor-meta"><span>◷ &nbsp;Mon – Fri · 9:00 AM–1:00 PM</span><span>✦ &nbsp;Fictional demo hours</span></div><button class="doctor-book" type="button" data-doctor="Dr. Maya Patel" data-department="General Medicine">Book with Maya <span>→</span></button></div>
+            </article>
+            <article class="doctor-card doctor-card-mint">
+              <div class="doctor-photo-wrap"><img class="doctor-photo" src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&amp;fit=crop&amp;w=720&amp;q=85" alt="" loading="lazy" /><span class="doctor-photo-fallback" aria-hidden="true">AR</span><span class="doctor-photo-label">CARDIOLOGY</span></div>
+              <div class="doctor-card-body"><span class="doctor-specialty">Cardiology</span><h2>Dr. Arjun Rao</h2><p>Heart-health consultations and follow-up visits in a fictional clinic setting.</p><div class="doctor-meta"><span>◷ &nbsp;Tue – Sat · 10:00 AM–4:00 PM</span><span>✦ &nbsp;Fictional demo hours</span></div><button class="doctor-book" type="button" data-doctor="Dr. Arjun Rao" data-department="Cardiology">Book with Arjun <span>→</span></button></div>
+            </article>
+            <article class="doctor-card doctor-card-peach">
+              <div class="doctor-photo-wrap"><img class="doctor-photo" src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&amp;fit=crop&amp;w=720&amp;q=85" alt="" loading="lazy" /><span class="doctor-photo-fallback" aria-hidden="true">ST</span><span class="doctor-photo-label">DERMATOLOGY</span></div>
+              <div class="doctor-card-body"><span class="doctor-specialty">Dermatology</span><h2>Dr. Sofia Thomas</h2><p>General skin-care consultations and routine follow-up appointments.</p><div class="doctor-meta"><span>◷ &nbsp;Mon – Thu · 9:00 AM–2:00 PM</span><span>✦ &nbsp;Fictional demo hours</span></div><button class="doctor-book" type="button" data-doctor="Dr. Sofia Thomas" data-department="Dermatology">Book with Sofia <span>→</span></button></div>
+            </article>
+            <article class="doctor-card doctor-card-blue">
+              <div class="doctor-photo-wrap"><img class="doctor-photo" src="https://images.unsplash.com/photo-1612531386530-97286d97c2d2?auto=format&amp;fit=crop&amp;w=720&amp;q=85" alt="" loading="lazy" /><span class="doctor-photo-fallback" aria-hidden="true">NW</span><span class="doctor-photo-label">PEDIATRICS</span></div>
+              <div class="doctor-card-body"><span class="doctor-specialty">Pediatrics</span><h2>Dr. Noah Williams</h2><p>Fictional child wellness and routine check-up appointments.</p><div class="doctor-meta"><span>◷ &nbsp;Mon – Fri · 9:00 AM–3:00 PM</span><span>✦ &nbsp;Fictional demo hours</span></div><button class="doctor-book" type="button" data-doctor="Dr. Noah Williams" data-department="Pediatrics">Book with Noah <span>→</span></button></div>
+            </article>
+            <article class="doctor-card doctor-card-rose">
+              <div class="doctor-photo-wrap"><img class="doctor-photo" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&amp;fit=crop&amp;w=720&amp;q=85" alt="" loading="lazy" /><span class="doctor-photo-fallback" aria-hidden="true">NK</span><span class="doctor-photo-label">DENTAL CARE</span></div>
+              <div class="doctor-card-body"><span class="doctor-specialty">Dental</span><h2>Dr. Nina Kapoor</h2><p>Fictional routine dental visits in this appointment-booking demo.</p><div class="doctor-meta"><span>◷ &nbsp;Tue – Sat · 10:00 AM–5:00 PM</span><span>✦ &nbsp;Fictional demo hours</span></div><button class="doctor-book" type="button" data-doctor="Dr. Nina Kapoor" data-department="Dental">Book with Nina <span>→</span></button></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="departmentsView" aria-labelledby="departmentsTitle" hidden>
+          <div class="page-heading page-heading-list">
+            <div><span class="eyebrow">CLINIC SERVICES <span class="eyebrow-dot"></span> DEMO DIRECTORY</span><h1 id="departmentsTitle">Departments</h1><p class="heading-subtitle">A simple guide to the sample services represented in CareNest.</p></div>
+            <button class="primary-button" type="button" data-navigate="doctors"><span>✚</span> Meet the doctors</button>
+          </div>
+          <div class="department-grid">
+            <article class="department-card dept-lilac"><span class="department-icon">✚</span><span class="department-label">01 / PRIMARY CARE</span><h2>General Medicine</h2><p>Routine check-ups and general wellness appointments.</p><button type="button" data-department="General Medicine" data-doctor="Dr. Maya Patel" class="department-link">Book with Dr. Maya Patel <span>→</span></button></article>
+            <article class="department-card dept-mint"><span class="department-icon">♡</span><span class="department-label">02 / HEART HEALTH</span><h2>Cardiology</h2><p>Sample heart-health consultations and follow-up visits.</p><button type="button" data-department="Cardiology" data-doctor="Dr. Arjun Rao" class="department-link">Book with Dr. Arjun Rao <span>→</span></button></article>
+            <article class="department-card dept-peach"><span class="department-icon">✿</span><span class="department-label">03 / SKIN CARE</span><h2>Dermatology</h2><p>Routine skin-care consultations and follow-up visits.</p><button type="button" data-department="Dermatology" data-doctor="Dr. Sofia Thomas" class="department-link">Book with Dr. Sofia Thomas <span>→</span></button></article>
+            <article class="department-card dept-blue"><span class="department-icon">☼</span><span class="department-label">04 / CHILD WELLNESS</span><h2>Pediatrics</h2><p>Fictional child wellness and routine check-up appointments.</p><button type="button" data-department="Pediatrics" data-doctor="Dr. Noah Williams" class="department-link">Book with Dr. Noah Williams <span>→</span></button></article>
+            <article class="department-card dept-rose"><span class="department-icon">✦</span><span class="department-label">05 / DENTAL CARE</span><h2>Dental</h2><p>Fictional routine dental visits with the demo dentist.</p><button type="button" class="department-link" data-doctor="Dr. Nina Kapoor" data-department="Dental">Book with Dr. Nina Kapoor <span>→</span></button></article>
+          </div>
+          <div class="project-note department-note"><span>ⓘ</span><p>These are demonstration categories, not real medical services. No clinical advice or treatment is provided by this project.</p></div>
+        </section>
+
+        <section class="view" id="insightsView" aria-labelledby="insightsTitle" hidden>
+          <div class="page-heading">
+            <div><span class="eyebrow">LIVE DEMO DATA <span class="eyebrow-dot"></span> FRONT-DESK ANALYTICS</span><h1 id="insightsTitle">Clinic pulse</h1><p class="heading-subtitle">A visual snapshot of appointment activity across your fictional clinic.</p></div>
+            <span class="insight-live"><i></i> Updates with your schedule</span>
+          </div>
+          <div class="insight-stat-grid" aria-label="Appointment summary">
+            <article class="insight-stat insight-total"><span>Total appointments</span><strong id="insightTotal">0</strong><small>All demo records</small></article>
+            <article class="insight-stat insight-scheduled"><span>Scheduled</span><strong id="insightScheduled">0</strong><small>Visits planned</small></article>
+            <article class="insight-stat insight-completed"><span>Completed</span><strong id="insightCompleted">0</strong><small>Visits completed</small></article>
+            <article class="insight-stat insight-cancelled"><span>Cancelled</span><strong id="insightCancelled">0</strong><small>Visits cancelled</small></article>
+          </div>
+          <div class="insight-grid">
+            <section class="panel insight-panel" aria-labelledby="statusInsightTitle">
+              <div class="panel-heading"><div><span class="section-kicker">STATUS MIX</span><h2 id="statusInsightTitle">Appointment status</h2><p>How demo appointments are currently tracked.</p></div><span class="insight-panel-icon insight-icon-purple">◒</span></div>
+              <div class="status-bubbles" id="statusBubbleChart" aria-label="Appointment status bubble chart"></div>
+              <div class="insight-bars" id="statusInsightList"></div>
+            </section>
+            <section class="panel insight-panel" aria-labelledby="departmentInsightTitle">
+              <div class="panel-heading"><div><span class="section-kicker">VISIT MIX</span><h2 id="departmentInsightTitle">By department</h2><p>Scheduled and completed appointments, grouped by department.</p></div><span class="insight-panel-icon insight-icon-green">✿</span></div>
+              <div class="insight-bars" id="departmentInsightList"></div>
+            </section>
+          </div>
+          <div class="insight-highlight"><span class="highlight-icon">✦</span><div><span class="section-kicker">BUSIEST DEMO DEPARTMENT</span><h2 id="insightHighlightTitle">Your clinic snapshot is ready</h2><p id="insightHighlightCopy">Create or book demo appointments to see the schedule patterns here.</p></div><button class="secondary-button" type="button" data-navigate="appointments">Open appointments <span>→</span></button></div>
+          <div class="project-note department-note"><span>ⓘ</span><p>These charts summarize appointment records only. They are not medical or diagnostic insights.</p></div>
+        </section>
+
+        <section class="view" id="aboutView" aria-labelledby="aboutTitle" hidden>
+          <div class="page-heading">
+            <div><span class="eyebrow">OPEN INNOVATION <span class="eyebrow-dot"></span> STUDENT PROJECT</span><h1 id="aboutTitle">About CareNest</h1><p class="heading-subtitle">A clear, colorful clinic workflow concept for appointment and record management.</p></div>
+          </div>
+          <section class="about-hero">
+            <span class="about-mark" aria-hidden="true">✚</span>
+            <div><span class="section-kicker">PROJECT OVERVIEW</span><h2>Making everyday clinic admin feel more organized.</h2><p>CareNest is a student-built prototype that brings a front-desk schedule, fictional patient profiles and appointment history into one responsive workspace.</p></div>
+            <button class="primary-button" type="button" data-navigate="dashboard">Explore the dashboard <span>→</span></button>
+          </section>
+          <div class="about-grid">
+            <article class="about-card about-purple"><span class="about-card-icon">⌕</span><span class="section-kicker">THE CHALLENGE</span><h2>Scattered information</h2><p>Small teams can find it difficult to keep daily visit times, patient contact details and appointment statuses organized in separate places.</p></article>
+            <article class="about-card about-green"><span class="about-card-icon">✦</span><span class="section-kicker">THE IDEA</span><h2>One simple workspace</h2><p>CareNest groups appointment booking, schedule search and fictional patient record management into a single, easy-to-follow experience.</p></article>
+            <article class="about-card about-orange"><span class="about-card-icon">⌘</span><span class="section-kicker">THE BUILD</span><h2>Frontend + backend</h2><p>The responsive interface uses HTML, CSS and JavaScript. A local Node.js API validates requests and stores demo records in SQLite.</p></article>
+          </div>
+          <section class="panel about-stack">
+            <div class="panel-heading"><div><span class="section-kicker">HOW THE DEMO WORKS</span><h2>Simple technology stack</h2><p>Each part has a clear role in the student prototype.</p></div></div>
+            <div class="stack-steps"><div><span class="stack-number stack-html">01</span><strong>Frontend</strong><small>Responsive pages, forms and navigation</small><span>HTML · CSS · JavaScript</span></div><span class="stack-arrow">→</span><div><span class="stack-number stack-api">02</span><strong>Backend</strong><small>Local JSON API and validation</small><span>Node.js built-in HTTP server</span></div><span class="stack-arrow">→</span><div><span class="stack-number stack-db">03</span><strong>Database</strong><small>Local persistent demo records</small><span>SQLite · node:sqlite</span></div></div>
+          </section>
+          <div class="privacy-callout"><span aria-hidden="true">⚠</span><div><strong>Fictional demo data only</strong><p>This prototype has no sign-in, encryption or production-grade health-data protections. Do not enter real patient details or use it for healthcare delivery.</p></div></div>
+          <div class="about-actions"><button class="secondary-button" type="button" data-navigate="doctors">Meet the demo doctors</button><button class="secondary-button" type="button" data-navigate="departments">Browse departments</button></div>
+        </section>
+
+        <footer class="footer"><span>CareNest Clinic · Student project prototype</span><span>Fictional demo data only <span class="footer-dot">●</span></span></footer>
+      </main>
+    </div>
+
+    <dialog class="app-dialog" id="appointmentDialog">
+      <form id="appointmentForm">
+        <div class="dialog-heading"><div><span class="dialog-kicker">SCHEDULING</span><h2 id="appointmentDialogTitle">Book an appointment</h2><p>Enter fictional demo information only.</p></div><button class="dialog-close" type="button" data-close="appointmentDialog" aria-label="Close">×</button></div>
+        <label class="form-label">Patient<select name="patientId" id="appointmentPatient" required></select></label>
+        <div class="form-row">
+          <label class="form-label">Doctor<select name="doctor" required><option value="">Select doctor</option><option>Dr. Maya Patel</option><option>Dr. Arjun Rao</option><option>Dr. Sofia Thomas</option><option>Dr. Noah Williams</option><option>Dr. Nina Kapoor</option></select></label>
+          <label class="form-label">Department<select name="department" required><option value="">Select department</option><option>General Medicine</option><option>Cardiology</option><option>Dermatology</option><option>Pediatrics</option><option>Dental</option></select></label>
+        </div>
+        <div class="form-row">
+          <label class="form-label">Date<input name="appointmentDate" type="date" required /></label>
+          <label class="form-label">Time<input name="appointmentTime" type="time" required /><span class="availability-hint" id="doctorAvailability" role="status" aria-live="polite">Choose a doctor, date and time to check availability.</span></label>
+        </div>
+        <label class="form-label">Visit reason (demo)
+          <select name="reason" required>
+            <option value="">Select a demo reason</option>
+            <option>Routine check-up</option>
+            <option>Follow-up visit</option>
+            <option>General consultation</option>
+            <option>Annual visit</option>
+            <option>Routine dental visit</option>
+          </select>
+        </label>
+        <p class="form-error" id="appointmentError" role="alert" hidden></p>
+        <button class="primary-button submit-button" type="submit">Save appointment <span>→</span></button>
+      </form>
+    </dialog>
+
+    <dialog class="app-dialog" id="patientDialog">
+      <form id="patientForm">
+        <div class="dialog-heading"><div><span class="dialog-kicker">PATIENT DIRECTORY</span><h2 id="patientDialogTitle">Add patient record</h2><p>Use fictional details for this student project demo.</p></div><button class="dialog-close" type="button" data-close="patientDialog" aria-label="Close">×</button></div>
+        <label class="form-label">Full name<input name="fullName" type="text" maxlength="80" placeholder="e.g. Jamie Parker" required /></label>
+        <div class="form-row">
+          <label class="form-label">Date of birth<input name="dateOfBirth" type="date" /></label>
+          <label class="form-label">Phone number<input name="phone" type="tel" maxlength="30" placeholder="Optional demo number" /></label>
+        </div>
+        <label class="form-label">Email address<input name="email" type="email" maxlength="120" placeholder="Optional demo email" /></label>
+        <label class="form-label">Administrative demo notes only<textarea name="recordNotes" maxlength="1000" rows="3" placeholder="Optional fictional admin note. Do not enter symptoms, diagnoses or real health information."></textarea></label>
+        <p class="form-error" id="patientError" role="alert" hidden></p>
+        <button class="primary-button submit-button" type="submit">Save patient record <span>→</span></button>
+      </form>
+    </dialog>
+
+    <dialog class="app-dialog detail-dialog" id="patientDetailDialog">
+      <div id="patientDetailContent"></div>
+      <button class="dialog-close detail-close" type="button" data-close="patientDetailDialog" aria-label="Close">×</button>
+    </dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

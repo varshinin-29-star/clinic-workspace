@@ -1,0 +1,14 @@
+{
+  "name": "carenest-clinic",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A local student-project demo for clinic appointments and fictional patient records.",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "start": "node backend/server.js",
+    "test": "node --test"
+  }
+}
