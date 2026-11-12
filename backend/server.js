@@ -341,8 +341,57 @@ function createPatient(data) {
 
 async function handleApi(request, response, url) {
   const { pathname, searchParams } = url;
+  if (pathname === "/api/chat" && request.method === "POST") {
+    const input = ensureObject(await readJson(request));
+    const message = typeof input.message === "string" ? input.message.trim() : "";
+    if (!message || message.length > 1000) {
+      sendJson(response, 400, { error: "Enter a message between 1 and 1,000 characters." });
+      return;
+    }
+    if (!process.env.OPENAI_API_KEY) {
+      sendJson(response, 503, { error: "AI chat is not configured. Set OPENAI_API_KEY on the server." });
+      return;
+    }
+    const aiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: process.env.OPENAI_MODEL || "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: "You are the CareNest Clinic demo assistant. Answer clearly and helpfully about using this fictional clinic administration demo. Do not claim to access clinic records or perform actions. Do not provide diagnosis, treatment, medication, or other medical advice. For emergencies, tell the user to contact local emergency services. The app contains fictional doctors and departments: General Medicine, Cardiology, Dermatology, Pediatrics, and Dental. Never request real patient or health information.",
+          },
+          { role: "user", content: message },
+        ],
+        max_completion_tokens: 400,
+      }),
+    });
+    if (!aiResponse.ok) {
+      console.error(`OpenAI chat request failed with status ${aiResponse.status}.`);
+      sendJson(response, 502, { error: "The AI provider could not answer right now. Please try again." });
+      return;
+    }
+    const result = await aiResponse.json();
+    const reply = result.choices?.[0]?.message?.content;
+    if (typeof reply !== "string" || !reply.trim()) {
+      console.error("OpenAI chat response did not contain a text reply.");
+      sendJson(response, 502, { error: "The AI provider returned an empty answer. Please try again." });
+      return;
+    }
+    sendJson(response, 200, { reply: reply.trim() });
+    return;
+  }
   if (pathname === "/api/health" && request.method === "GET") {
-    sendJson(response, 200, { status: "ok", mode: "local-student-demo", fictionalData: true });
+    sendJson(response, 200, {
+      status: "ok",
+      mode: "local-student-demo",
+      fictionalData: true,
+      aiConfigured: Boolean(process.env.OPENAI_API_KEY),
+    });
     return;
   }
   if (pathname === "/api/dashboard" && request.method === "GET") {

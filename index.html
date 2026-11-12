@@ -27,6 +27,7 @@
           <p class="nav-caption nav-caption-secondary">CLINIC</p>
           <a class="nav-link" href="#doctors" data-view="doctors"><span class="nav-icon">✚</span> Our doctors</a>
           <a class="nav-link" href="#departments" data-view="departments"><span class="nav-icon">✿</span> Departments</a>
+          <a class="nav-link" href="#assistant" data-view="assistant"><span class="nav-icon">✦</span> Clinic assistant</a>
           <a class="nav-link" href="#insights" data-view="insights"><span class="nav-icon">◒</span> Clinic pulse</a>
           <a class="nav-link" href="#about" data-view="about"><span class="nav-icon">ⓘ</span> About this project</a>
         </nav>
@@ -74,6 +75,15 @@
             </div>
             <button class="primary-button" id="bookAppointmentTop" type="button"><span>＋</span> Book appointment</button>
           </div>
+
+          <section class="student-project-card" aria-label="Student project details">
+            <h2>Student project details</h2>
+            <dl>
+              <div><dt>Name</dt><dd>Varshini</dd></div>
+              <div><dt>Section</dt><dd>5</dd></div>
+              <div><dt>Subject</dt><dd>Web Project</dd></div>
+            </dl>
+          </section>
 
           <section class="summary-grid" aria-label="Clinic summary">
             <article class="summary-card">
@@ -288,6 +298,34 @@
           </div>
           <div class="insight-highlight"><span class="highlight-icon">✦</span><div><span class="section-kicker">BUSIEST DEMO DEPARTMENT</span><h2 id="insightHighlightTitle">Your clinic snapshot is ready</h2><p id="insightHighlightCopy">Create or book demo appointments to see the schedule patterns here.</p></div><button class="secondary-button" type="button" data-navigate="appointments">Open appointments <span>→</span></button></div>
           <div class="project-note department-note"><span>ⓘ</span><p>These charts summarize appointment records only. They are not medical or diagnostic insights.</p></div>
+        </section>
+
+        <section class="view" id="assistantView" aria-labelledby="assistantTitle" hidden>
+          <div class="page-heading">
+            <div><span class="eyebrow">AI CLINIC HELPER <span class="eyebrow-dot"></span> CLINIC WORKFLOW</span><h1 id="assistantTitle">CareNest AI assistant</h1><p class="heading-subtitle">Ask questions about using the demo, appointments, departments or clinic information.</p></div>
+          </div>
+          <section class="assistant-panel" aria-label="Clinic assistant chat">
+            <div class="assistant-header">
+              <span class="assistant-avatar" aria-hidden="true">✦</span>
+              <div><strong>CareNest AI helper</strong><small>Powered by OpenAI · CareNest demo information</small></div>
+              <span class="assistant-status" id="assistantStatus">● Checking configuration</span>
+            </div>
+            <div class="assistant-notice" role="note">Your message is sent to OpenAI to generate a reply. CareNest does not send patient records or save chat messages. OpenAI’s data practices apply. Do not share real patient or health information; this assistant cannot provide medical advice.</div>
+            <div class="chat-messages" id="chatMessages" role="log" aria-live="polite" aria-relevant="additions">
+              <div class="chat-message assistant-message"><span class="message-avatar" aria-hidden="true">✦</span><p>Hi! I’m your CareNest AI assistant. Ask me about using the demo, appointments, departments or other general questions.</p></div>
+            </div>
+            <div class="chat-suggestions" aria-label="Suggested questions">
+              <button type="button" class="chat-suggestion">How do I book an appointment?</button>
+              <button type="button" class="chat-suggestion">Which departments are available?</button>
+              <button type="button" class="chat-suggestion">How does this demo protect privacy?</button>
+            </div>
+            <form class="chat-form" id="chatForm">
+              <label class="sr-only" for="chatInput">Ask the CareNest assistant</label>
+              <input id="chatInput" name="message" maxlength="1000" autocomplete="off" placeholder="Ask the AI assistant a question…" required />
+              <button class="primary-button" id="chatSend" type="submit"><span>↑</span> Send</button>
+            </form>
+            <p class="chat-footnote">Chat is not saved by CareNest or linked to clinic records. Never enter real patient information.</p>
+          </section>
         </section>
 
         <section class="view" id="aboutView" aria-labelledby="aboutTitle" hidden>

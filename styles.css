@@ -34,6 +34,7 @@ button { color: inherit; }
 .nav-caption-secondary { margin-top: 21px; }
 .nav-link[data-view="doctors"].active { background: #f1edff; color: #7054cf; }
 .nav-link[data-view="departments"].active { background: #fff1e9; color: #c97743; }
+.nav-link[data-view="assistant"].active { background: #f0edff; color: #6245b7; }
 .nav-link[data-view="about"].active { background: #eaf3ff; color: #4a7fc1; }
 .sidebar { border-right-color: #e1def1; background: linear-gradient(180deg, #fff 0%, #fbfaff 48%, #f5fbf8 100%); }
 .main-nav .nav-link { position: relative; border: 1px solid transparent; }
@@ -42,6 +43,7 @@ button { color: inherit; }
 .main-nav .nav-link[data-view="patients"] .nav-icon { color: #16866f; }
 .main-nav .nav-link[data-view="doctors"] .nav-icon { color: #bd5a91; }
 .main-nav .nav-link[data-view="departments"] .nav-icon { color: #c97938; }
+.main-nav .nav-link[data-view="assistant"] .nav-icon { color: #7658df; }
 .main-nav .nav-link[data-view="insights"] .nav-icon { color: #3282cb; }
 .main-nav .nav-link[data-view="about"] .nav-icon { color: #b64b82; }
 .main-nav .nav-link:hover { border-color: #e8e1fa; background: linear-gradient(100deg, #f1edff, #f2fbf8); }
@@ -50,6 +52,7 @@ button { color: inherit; }
 .main-nav .nav-link.active[data-view="patients"] { border-color: #bfe7d7; background: linear-gradient(100deg, #dcf4e8, #eaf9f2); color: #11745b; }
 .main-nav .nav-link.active[data-view="doctors"] { border-color: #d8cafa; background: linear-gradient(100deg, #ece5ff, #f6f1ff); color: #6245b7; }
 .main-nav .nav-link.active[data-view="departments"] { border-color: #f1d0b5; background: linear-gradient(100deg, #ffead8, #fff4e9); color: #a95228; }
+.main-nav .nav-link.active[data-view="assistant"] { border-color: #d8cafa; background: linear-gradient(100deg, #ece5ff, #f6f1ff); color: #6245b7; }
 .main-nav .nav-link.active[data-view="insights"] { border-color: #b8dafa; background: linear-gradient(100deg, #deefff, #e8f8fb); color: #286cae; }
 .main-nav .nav-link.active[data-view="about"] { border-color: #edc5d9; background: linear-gradient(100deg, #ffe7f0, #fff1f4); color: #a93e70; }
 .sidebar-spacer { flex: 1; }
@@ -207,6 +210,12 @@ h1 > span { color: #e9ae5d; font-size: 18px; }
 #dashboardView > .page-heading .heading-subtitle { color: #d6e4ff; }
 #dashboardView > .page-heading .primary-button { border: 1px solid #ffffff66; background: linear-gradient(120deg, #35cbb9, #2494bb); box-shadow: 0 7px 20px #07153655; }
 #dashboardView > .page-heading .primary-button:hover { background: linear-gradient(120deg, #24bba9, #1686aa); }
+#dashboardView .student-project-card { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 14px; margin: 0 0 14px; padding: 11px 15px; border: 1px solid #d6cff3; border-radius: 11px; background: linear-gradient(100deg, #f1edff, #fff 50%, #eaf8f3); }
+#dashboardView .student-project-card h2 { margin: 0; color: #56459c; font-family: "Manrope", sans-serif; font-size: 10px; white-space: nowrap; }
+#dashboardView .student-project-card dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; }
+#dashboardView .student-project-card dl > div { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+#dashboardView .student-project-card dt { color: #788398; font-size: 9px; }
+#dashboardView .student-project-card dd { margin: 0; color: #30394d; font-size: 10px; font-weight: 700; }
 #dashboardView .summary-card:nth-child(1) { border-color: #7058d2; background: linear-gradient(145deg, #8569e8, #5943bd); }
 #dashboardView .summary-card:nth-child(2) { border-color: #148c79; background: linear-gradient(145deg, #23b99c, #087c68); }
 #dashboardView .summary-card:nth-child(3) { border-color: #d8753b; background: linear-gradient(145deg, #f2a05e, #d86c3b); }
@@ -754,6 +763,30 @@ h1 > span { color: #e9ae5d; font-size: 18px; }
 #aboutView .about-actions .secondary-button { border-color: #cbbce9; background: linear-gradient(100deg, #f0eaff, #fff); color: #654bb1; }
 #aboutView .about-actions .secondary-button:hover { border-color: #ab92df; background: #e8dfff; }
 
+.assistant-panel { max-width: 820px; margin: 4px auto 28px; overflow: hidden; border: 1px solid #e3def3; border-radius: 16px; background: #fff; box-shadow: 0 12px 32px #4034690d; }
+.assistant-header { display: flex; align-items: center; gap: 11px; padding: 16px 19px; border-bottom: 1px solid #eeeaf5; background: linear-gradient(100deg, #faf8ff, #f4fbf8); }
+.assistant-avatar { display: inline-flex; width: 38px; height: 38px; flex: 0 0 auto; align-items: center; justify-content: center; border-radius: 13px; background: linear-gradient(145deg, #7658df, #189e8e); color: #fff; font-size: 19px; }
+.assistant-header > div { display: grid; gap: 3px; }
+.assistant-header strong { color: #30374b; font-size: 12px; }
+.assistant-header small { color: #828ba0; font-size: 9px; }
+.assistant-status { margin-left: auto; color: #348569; font-size: 9px; white-space: nowrap; }
+.assistant-status.is-offline { color: #aa695e; }
+.assistant-notice { margin: 15px 19px 0; padding: 10px 12px; border: 1px solid #efd6a9; border-radius: 9px; background: #fff8e9; color: #785d3f; font-size: 10px; line-height: 1.55; }
+.chat-messages { display: grid; max-height: 48vh; min-height: 270px; align-content: start; gap: 15px; overflow-y: auto; padding: 20px 19px; }
+.chat-message { display: flex; align-items: flex-start; gap: 9px; }
+.chat-message p { max-width: min(620px, 85%); margin: 0; padding: 11px 13px; border: 1px solid #e9e6f3; border-radius: 4px 13px 13px 13px; background: #f8f7fc; color: #4b5368; font-size: 11px; line-height: 1.65; overflow-wrap: anywhere; }
+.message-avatar { display: inline-flex; width: 25px; height: 25px; flex: 0 0 auto; align-items: center; justify-content: center; border-radius: 9px; background: #eee9ff; color: #6951c3; font-size: 13px; }
+.user-message { justify-content: flex-end; }
+.user-message p { border-color: #d8e9e5; border-radius: 13px 4px 13px 13px; background: #eef8f5; color: #315d56; }
+.chat-suggestions { display: flex; flex-wrap: wrap; gap: 7px; padding: 0 19px 14px; }
+.chat-suggestion { min-height: 30px; padding: 5px 10px; border: 1px solid #e4def5; border-radius: 18px; background: #fff; color: #62519e; font-size: 9px; cursor: pointer; }
+.chat-suggestion:hover { border-color: #c9b9f1; background: #f7f4ff; }
+.chat-form { display: flex; gap: 9px; padding: 13px 19px; border-top: 1px solid #eeeaf5; background: #fcfbfe; }
+.chat-form input { min-width: 0; min-height: 41px; flex: 1; padding: 0 12px; border: 1px solid #e2e4ec; border-radius: 9px; outline: none; background: #fff; color: var(--ink); font-size: 11px; }
+.chat-form input:focus { border-color: #a99ae1; box-shadow: 0 0 0 3px #7658df16; }
+.chat-form .primary-button { min-height: 41px; }
+.chat-footnote { margin: 0; padding: 0 19px 13px; background: #fcfbfe; color: #8992a4; font-size: 9px; }
+
 @media (min-width: 1500px) {
   .main-content { margin-right: auto; padding-right: 55px; padding-left: 55px; }
 }
@@ -789,6 +822,9 @@ h1 > span { color: #e9ae5d; font-size: 18px; }
   .page-heading { align-items: flex-start; padding-top: 21px; }
   #dashboardView > .page-heading { margin: 12px 0 12px; padding: 16px 13px; }
   #dashboardView > .page-heading::after { right: 90px; width: 100px; height: 100px; }
+  #dashboardView .student-project-card { grid-template-columns: 1fr; gap: 9px; padding: 11px; }
+  #dashboardView .student-project-card dl { gap: 7px; }
+  #dashboardView .student-project-card dl > div { align-items: flex-start; flex-direction: column; gap: 2px; }
   h1 { font-size: 22px; }
   .heading-subtitle { max-width: 370px; font-size: 10px; }
   .page-heading > .primary-button { min-height: 36px; padding: 0 10px; font-size: 9px; }
@@ -834,6 +870,13 @@ h1 > span { color: #e9ae5d; font-size: 18px; }
   .highlight-icon { width: 35px; height: 35px; }
   .detail-grid { grid-template-columns: 1fr; }
   .footer { font-size: 8px; }
+  .assistant-header { padding-right: 13px; padding-left: 13px; }
+  .assistant-notice { margin-right: 13px; margin-left: 13px; }
+  .chat-messages { padding-right: 13px; padding-left: 13px; }
+  .chat-suggestions { padding-right: 13px; padding-left: 13px; }
+  .chat-form { padding-right: 13px; padding-left: 13px; }
+  .chat-footnote { padding-right: 13px; padding-left: 13px; }
+  .chat-form .primary-button { padding: 0 10px; }
 }
 @media (max-width: 390px) {
   .party-decor { right: 2px; transform: scale(.58); opacity: .48; }

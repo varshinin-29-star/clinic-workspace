@@ -30,6 +30,7 @@ before(async () => {
       ...process.env,
       PORT: "0",
       CARENEST_DB_PATH: join(databaseDirectory, "test.sqlite"),
+      OPENAI_API_KEY: "",
     },
     stdio: ["ignore", "pipe", "pipe"],
   });
@@ -84,14 +85,36 @@ test("the project page and fictional clinic dashboard are available", async () =
     request("/api/appointments").then((response) => response.json()),
   ]);
   assert.equal(page.status, 200);
-  assert.match(await page.text(), /fictional records only/i);
-  assert.deepEqual(health, { status: "ok", mode: "local-student-demo", fictionalData: true });
+  const projectPage = await page.text();
+  assert.match(projectPage, /fictional records only/i);
+  assert.match(projectPage, /Varshini/);
+  assert.match(projectPage, /Section<\/dt><dd>5/);
+  assert.match(projectPage, /Web Project/);
+  assert.match(projectPage, /CareNest assistant/i);
+  assert.match(projectPage, /Your message is sent to OpenAI/i);
+  assert.deepEqual(health, {
+    status: "ok",
+    mode: "local-student-demo",
+    fictionalData: true,
+    aiConfigured: false,
+  });
   assert.ok(patients.patients.length >= 5);
   assert.ok(appointments.appointments.length >= 5);
   assert.equal(dashboard.patientCount, patients.patients.length);
   assert.equal(dashboard.doctorCount, 5);
   assert.ok(dashboard.todayAppointments.length >= 1);
   assert.ok(dashboard.upcomingCount >= 1);
+});
+
+test("AI chat validates questions and reports missing provider configuration", async () => {
+  const invalid = await request("/api/chat", jsonOptions("POST", { message: " " }));
+  assert.equal(invalid.status, 400);
+
+  const unconfigured = await request("/api/chat", jsonOptions("POST", {
+    message: "How do I book an appointment?",
+  }));
+  assert.equal(unconfigured.status, 503);
+  assert.match((await unconfigured.json()).error, /OPENAI_API_KEY/);
 });
 
 test("patient records can be created, searched, viewed and updated", async () => {

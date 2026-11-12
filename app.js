@@ -17,6 +17,7 @@ const pageLabels = {
   patients: "Patient records",
   doctors: "Our doctors",
   departments: "Departments",
+  assistant: "Clinic assistant",
   insights: "Clinic pulse",
   about: "About this project",
 };
@@ -380,10 +381,11 @@ function renderPatients() {
 }
 
 async function refreshData() {
-  const [dashboard, patientData, appointmentData] = await Promise.all([
+  const [dashboard, patientData, appointmentData, health] = await Promise.all([
     apiRequest("/api/dashboard"),
     apiRequest("/api/patients"),
     apiRequest("/api/appointments"),
+    apiRequest("/api/health"),
   ]);
   patients = patientData.patients;
   appointments = appointmentData.appointments;
@@ -391,6 +393,9 @@ async function refreshData() {
   renderPatients();
   renderAppointments();
   renderInsights();
+  const assistantStatus = document.querySelector("#assistantStatus");
+  assistantStatus.textContent = health.aiConfigured ? "● AI ready" : "● API key needed";
+  assistantStatus.classList.toggle("is-offline", !health.aiConfigured);
   setServerStatus(true);
 }
 
@@ -412,6 +417,57 @@ function navigateTo(viewName) {
   document.querySelector("#menuToggle").setAttribute("aria-expanded", "false");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
+
+function addChatMessage(message, sender) {
+  const row = document.createElement("div");
+  row.className = `chat-message ${sender}-message`;
+  if (sender === "assistant") {
+    const avatar = document.createElement("span");
+    avatar.className = "message-avatar";
+    avatar.setAttribute("aria-hidden", "true");
+    avatar.textContent = "✦";
+    row.append(avatar);
+  }
+  const text = document.createElement("p");
+  text.textContent = message;
+  row.append(text);
+  document.querySelector("#chatMessages").append(row);
+  row.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+
+document.querySelector("#chatForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const input = document.querySelector("#chatInput");
+  const sendButton = document.querySelector("#chatSend");
+  const message = input.value.trim();
+  if (!message) return;
+  addChatMessage(message, "user");
+  input.value = "";
+  input.disabled = true;
+  sendButton.disabled = true;
+  sendButton.textContent = "Thinking…";
+  try {
+    const result = await apiRequest("/api/chat", {
+      method: "POST",
+      body: JSON.stringify({ message }),
+    });
+    addChatMessage(result.reply, "assistant");
+  } catch (error) {
+    addChatMessage(`I couldn't get an answer: ${error.message}`, "assistant");
+  } finally {
+    input.disabled = false;
+    sendButton.disabled = false;
+    sendButton.innerHTML = "<span>↑</span> Send";
+    input.focus();
+  }
+});
+document.querySelectorAll(".chat-suggestion").forEach((button) => {
+  button.addEventListener("click", () => {
+    const input = document.querySelector("#chatInput");
+    input.value = button.textContent;
+    document.querySelector("#chatForm").requestSubmit();
+  });
+});
 
 function updatePatientSelect(selectedId = "") {
   const select = document.querySelector("#appointmentPatient");
